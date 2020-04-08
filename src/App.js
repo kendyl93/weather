@@ -1,8 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react"
+import logo from "./logo.svg"
+import axios from "axios"
+import "./App.css"
 
-function App() {
+const API_KEY = "dcc5b65560b4c5a817bd29988271028e"
+
+const App = () => {
+  const [data, setData] = useState()
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        `http://api.openweathermap.org/data/2.5/forecast?q=München,DE&appid=${API_KEY}`
+      )
+
+      setData(result.data)
+    }
+    fetchData()
+  }, [])
+
+  console.log({ data })
+
   return (
     <div className="App">
       <header className="App-header">
@@ -20,7 +37,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
