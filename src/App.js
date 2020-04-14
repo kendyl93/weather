@@ -1,52 +1,66 @@
-import React, {  useState } from "react"
-import axios from "axios"
-import "./App.css"
+import React, { useState } from 'react';
+import './App.css';
+import City from './City';
+import { any } from './utils/array';
+import { getCityData } from './api';
 
-
-const API_KEY = "dcc5b65560b4c5a817bd29988271028e"
-
-    
-const getCityData = setData => async cityName =>  {
+const getData = async (cityName) => {
   try {
+    const result = await getCityData(cityName);
 
-    const result = await axios(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}`
-      )
-      debugger;
-
-    setData(result.data.list)
+    return result.data;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 
-const fromKelvinsToCelcius = value => Math.round(value - 273.15);
-
-const calculateDataToCelcius = data => data.map(fromKelvinsToCelcius)
+const RenderCities = ({ cities }) => {
+  return (
+    any(cities) &&
+    cities.map(({ name, country, sunrise, sunset }) => (
+      <City
+        key={name}
+        name={name}
+        country={country}
+        sunrise={sunrise}
+        sunset={sunset}
+      />
+    ))
+  );
+};
 
 const App = () => {
-  const [data, setData] = useState()
+  const [data, setData] = useState();
   const [cityName, setCityName] = useState('London');
+  const [cities, setCities] = useState([]);
 
-  const getCityDataByName = getCityData(setData)
-  const handleCityName = ({target: {value}})=> setCityName(value)
+  const handleCityName = ({ target: { value } }) => setCityName(value);
 
-  const onFormSubmit = async event => {
+  const onFormSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    await getCityDataByName(cityName)
-  }
+    const cityData = await getData(cityName);
+
+    setData(cityData);
+    setCities([...cities, cityData?.city]);
+  };
 
   return (
     <div className="App">
       <header className="App-header">Weather tracker</header>
       <form onSubmit={onFormSubmit}>
-      <input type="text" value={cityName} onChange={handleCityName} placeholder="i.e. London"/>
-      <button type="submit">Get</button>
-    </form>  
-  {data && console.log({ data, KK: calculateDataToCelcius(data.map(({main: {temp}})=>temp))})}
+        <input
+          type="text"
+          value={cityName}
+          onChange={handleCityName}
+          placeholder="i.e. London"
+        />
+        <button type="submit">Get</button>
+      </form>
+      <RenderCities cities={cities} />
+      {console.log({ data })}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

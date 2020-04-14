@@ -1,0 +1,1 @@
+export const any = xs => xs && xs.length > 0; 
