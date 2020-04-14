@@ -11,8 +11,8 @@ const City = ({ name, country, sunrise, sunset }) => {
       <h4>
         {name} - {country}
       </h4>
-      <div>sunrise: {new Date(sunrise).toString()}</div>
-      <div>{new Date(sunset).toString()}</div>
+      <div>Sunrise: {new Date(sunrise).toString()}</div>
+      <div>Sunset: {new Date(sunset).toString()}</div>
     </CityWrapper>
   );
 };
