@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Col from 'react-bootstrap/Col';
+import { Link } from 'react-router-dom';
 import Header from '../UI/Header';
 
 import fromUnixTimestampToDate from '../utils/date';
@@ -11,18 +12,20 @@ const CityWrapper = styled.div`
   border-radius: 16px;
 `;
 
-const City = ({ name, country, sunrise, sunset }) => {
+const City = ({ cityId, name, country, sunrise, sunset }) => {
   const sunriseDate = fromUnixTimestampToDate(sunrise);
   const sunsetDate = fromUnixTimestampToDate(sunset);
 
   return (
     <Col>
       <CityWrapper>
-        <Header Tag="h4">
-          {name} - {country}
-        </Header>
-        <div>Sunrise: {sunriseDate.toLocaleTimeString()}</div>
-        <div>Sunset: {sunsetDate.toLocaleTimeString()}</div>
+        <Link to={`/forecast/${cityId}`}>
+          <Header Tag="h4">
+            {name} - {country}
+          </Header>
+          <div>Sunrise: {sunriseDate.toLocaleTimeString()}</div>
+          <div>Sunset: {sunsetDate.toLocaleTimeString()}</div>
+        </Link>
       </CityWrapper>
     </Col>
   );

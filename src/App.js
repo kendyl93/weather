@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import City from './Components/City';
 import any from './utils/array';
-import getCityData from './api';
+import { getCityData } from './api';
 import { cityAlreadyFetched } from './helpers';
 import Hint from './UI/Hint';
 import CityForm from './Components/CityForm';
@@ -26,10 +26,11 @@ const getData = async (cityName) => {
 
 const RenderCities = ({ cities }) =>
   any(cities) &&
-  cities.map(({ name, country, sunrise, sunset }) => (
+  cities.map(({ id, name, country, sunrise, sunset }) => (
     <City
       key={name}
       name={name}
+      cityId={id}
       country={country}
       sunrise={sunrise}
       sunset={sunset}
@@ -38,7 +39,7 @@ const RenderCities = ({ cities }) =>
 
 const App = () => {
   const [data, setData] = useState(undefined);
-  const [cityName, setCityName] = useState('London');
+  const [cityName, setCityName] = useState('');
   const [cities, setCities] = useState([]);
   const [hint, setHint] = useState();
 
@@ -71,6 +72,16 @@ const App = () => {
 
     return false;
   };
+
+  useEffect(() => {
+    if (cities.length > 0) {
+      localStorage.setItem('cities', JSON.stringify(cities));
+    }
+  }, [cities]);
+
+  useEffect(() => {
+    setCities(JSON.parse(localStorage.getItem('cities') || '[]'));
+  }, []);
 
   return (
     <Container className="row-spacing">
