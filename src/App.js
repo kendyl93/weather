@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import City from './Components/City';
-import { any } from './utils/array';
-import { getCityData } from './api';
-import { cityAlreadyFetched } from './helpers';
-import Hint from './UI/Hint';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import City from './Components/City';
+import any from './utils/array';
+import getCityData from './api';
+import { cityAlreadyFetched } from './helpers';
+import Hint from './UI/Hint';
 import CityForm from './Components/CityForm';
 import Header from './UI/Header';
 import Spinner from './UI/Spinner';
@@ -20,6 +20,8 @@ const getData = async (cityName) => {
   } catch (error) {
     console.error(error);
   }
+
+  return false;
 };
 
 const RenderCities = ({ cities }) =>
@@ -37,7 +39,6 @@ const RenderCities = ({ cities }) =>
 const App = () => {
   const [data, setData] = useState(undefined);
   const [cityName, setCityName] = useState('London');
-  const [isLoading, setLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const [hint, setHint] = useState();
 
@@ -63,10 +64,12 @@ const App = () => {
         });
       }
 
-      setCities([...cities, cityData?.city]);
+      return setCities([...cities, cityData?.city]);
     } catch (error) {
       setHint({ message: 'Something went wrong', variant: 'danger' });
     }
+
+    return false;
   };
 
   return (

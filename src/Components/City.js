@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Col from 'react-bootstrap/Col';
 import Header from '../UI/Header';
 
-import { fromUnixTimestampToDate } from '../utils/date';
+import fromUnixTimestampToDate from '../utils/date';
 
 const CityWrapper = styled.div`
   border: solid 1px;
