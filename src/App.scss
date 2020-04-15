@@ -1,0 +1,9 @@
+.btn {
+  min-width: 180px;
+}
+
+.row-spacing {
+  & > :not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+}

@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import Col from 'react-bootstrap/Col';
+import Header from '../UI/Header';
 
-import { fromUnixTimestampToDate } from './utils/date';
+import { fromUnixTimestampToDate } from '../utils/date';
 
 const CityWrapper = styled.div`
   border: solid 1px;
@@ -17,9 +18,9 @@ const City = ({ name, country, sunrise, sunset }) => {
   return (
     <Col>
       <CityWrapper>
-        <h4>
+        <Header Tag="h4">
           {name} - {country}
-        </h4>
+        </Header>
         <div>Sunrise: {sunriseDate.toLocaleTimeString()}</div>
         <div>Sunset: {sunsetDate.toLocaleTimeString()}</div>
       </CityWrapper>
