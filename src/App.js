@@ -5,7 +5,13 @@ import City from './Components/City';
 import any from './utils/array';
 import { getCityData } from './api';
 import { cityAlreadyFetched } from './helpers';
-import { showMin, showMax, showMean, showMode } from './utils/math';
+import {
+  showMin,
+  showMax,
+  showMean,
+  showMode,
+  kelvinToCelcius,
+} from './utils/math';
 import Hint from './UI/Hint';
 import CityForm from './Components/CityForm';
 import Header from './UI/Header';
@@ -29,7 +35,9 @@ const RenderCities = ({ cities }) =>
   any(cities) &&
   cities.map(({ city, list }) => {
     const { id, name, country, sunrise, sunset } = city;
-    const temperatures = list.map(({ main: { temp } }) => temp - 273.15);
+    const temperatures = list.map(({ main: { temp } }) =>
+      kelvinToCelcius(temp),
+    );
     const minTemperature = showMin(temperatures);
     const maxTemperature = showMax(temperatures);
     const meanTemperature = showMean(temperatures);

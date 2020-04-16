@@ -51,3 +51,5 @@ export const showMode = (data) => {
     return current;
   }, initialValues);
 };
+
+export const kelvinToCelcius = (value) => roundTo2Decimals(value - 273.15);

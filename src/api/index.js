@@ -16,10 +16,10 @@ export const getCityData = async (cityName) => {
   return false;
 };
 
-export const getCityDataByCityId = async (cityId) => {
+export const get5DaysForecastByCityId = async (cityId) => {
   try {
     return await axios(
-      `${ENDPOINT_BASE_URL}/forecast?id=${cityId}&appid=${API_KEY}`,
+      `${ENDPOINT_BASE_URL}/forecast?id=${cityId}&cnt=5&appid=${API_KEY}`,
     );
   } catch (error) {
     console.error(error);

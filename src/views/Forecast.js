@@ -3,7 +3,11 @@ import { useParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Header from '../UI/Header';
-import { getCityDataByCityId } from '../api';
+import { get5DaysForecastByCityId } from '../api';
+import { fromUnixTimestampToDate } from '../utils/date';
+import { kelvinToCelcius } from '../utils/math';
+import any from '../utils/array';
+import Charts from '../UI/Charts';
 
 const Forecast = () => {
   const { cityId } = useParams();
@@ -12,7 +16,7 @@ const Forecast = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getCityDataByCityId(cityId);
+        const result = await get5DaysForecastByCityId(cityId);
         setCityData(result);
       } catch (error) {
         console.error(error);
@@ -23,6 +27,14 @@ const Forecast = () => {
     fetchData();
   }, []);
 
+  const transformData = cityData?.data?.list.map(
+    ({ dt, main: { humidity, temp } }) => ({
+      dateTime: fromUnixTimestampToDate(dt),
+      temperature: kelvinToCelcius(temp),
+      humidity,
+    }),
+  );
+
   return (
     <Container>
       <Row>
@@ -30,6 +42,7 @@ const Forecast = () => {
           Forecast for {cityData && cityData.data.city?.name}
         </Header>
       </Row>
+      <Row>{any(transformData) && <Charts data={transformData} />}</Row>
     </Container>
   );
 };
