@@ -12,7 +12,17 @@ const CityWrapper = styled.div`
   border-radius: 16px;
 `;
 
-const City = ({ cityId, name, country, sunrise, sunset }) => {
+const City = ({
+  cityId,
+  name,
+  country,
+  sunrise,
+  sunset,
+  minTemperature,
+  maxTemperature,
+  meanTemperature,
+  modeTemperature,
+}) => {
   const sunriseDate = fromUnixTimestampToDate(sunrise);
   const sunsetDate = fromUnixTimestampToDate(sunset);
 
@@ -25,6 +35,10 @@ const City = ({ cityId, name, country, sunrise, sunset }) => {
           </Header>
           <div>Sunrise: {sunriseDate.toLocaleTimeString()}</div>
           <div>Sunset: {sunsetDate.toLocaleTimeString()}</div>
+          <div>min: {minTemperature}&deg;C</div>
+          <div>max: {maxTemperature}&deg;C</div>
+          <div>mean: {meanTemperature}&deg;C</div>
+          <div>mode: {modeTemperature}&deg;C</div>
         </Link>
       </CityWrapper>
     </Col>

@@ -5,6 +5,7 @@ import City from './Components/City';
 import any from './utils/array';
 import { getCityData } from './api';
 import { cityAlreadyFetched } from './helpers';
+import { showMin, showMax, showMean, showMode } from './utils/math';
 import Hint from './UI/Hint';
 import CityForm from './Components/CityForm';
 import Header from './UI/Header';
@@ -26,16 +27,29 @@ const getData = async (cityName) => {
 
 const RenderCities = ({ cities }) =>
   any(cities) &&
-  cities.map(({ id, name, country, sunrise, sunset }) => (
-    <City
-      key={name}
-      name={name}
-      cityId={id}
-      country={country}
-      sunrise={sunrise}
-      sunset={sunset}
-    />
-  ));
+  cities.map(({ city, list }) => {
+    const { id, name, country, sunrise, sunset } = city;
+    const temperatures = list.map(({ main: { temp } }) => temp - 273.15);
+    const minTemperature = showMin(temperatures);
+    const maxTemperature = showMax(temperatures);
+    const meanTemperature = showMean(temperatures);
+    const modeTemperature = showMode(temperatures).mode;
+
+    return (
+      <City
+        key={name}
+        name={name}
+        cityId={id}
+        country={country}
+        sunrise={sunrise}
+        sunset={sunset}
+        minTemperature={minTemperature}
+        maxTemperature={maxTemperature}
+        meanTemperature={meanTemperature}
+        modeTemperature={modeTemperature}
+      />
+    );
+  });
 
 const App = () => {
   const [data, setData] = useState(undefined);
@@ -65,7 +79,10 @@ const App = () => {
         });
       }
 
-      return setCities([...cities, cityData?.city]);
+      return setCities([
+        ...cities,
+        { city: cityData?.city, list: cityData?.list },
+      ]);
     } catch (error) {
       setHint({ message: 'Something went wrong', variant: 'danger' });
     }
@@ -96,7 +113,7 @@ const App = () => {
       <Row xs={2} md={5}>
         <RenderCities cities={cities} />
       </Row>
-      {console.log({ data })}
+      {console.log({ cities })}
     </Container>
   );
 };
