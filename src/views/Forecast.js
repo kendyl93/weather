@@ -7,7 +7,7 @@ import { get5DaysForecastByCityId } from '../api';
 import { fromUnixTimestampToDate } from '../utils/date';
 import { kelvinToCelcius } from '../utils/math';
 import any from '../utils/array';
-import Charts from '../UI/Charts';
+import Charts from '../UI/Charts/Charts';
 
 const Forecast = () => {
   const { cityId } = useParams();

@@ -1,3 +1,3 @@
-const any = (xs) => xs && xs.length > 0;
+const any = (data) => data && data.length > 0;
 
 export default any;

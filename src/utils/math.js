@@ -1,4 +1,4 @@
-const roundTo2Decimals = (value) =>
+export const roundTo2Decimals = (value) =>
   Math.round((value + Number.EPSILON) * 100) / 100;
 
 export const showMin = (data) => {
@@ -31,7 +31,7 @@ export const showMean = (data) => {
   return roundTo2Decimals(dataSum / countData);
 };
 
-const increment = (value) => 1 + value;
+const increment = (value) => value + 1;
 
 export const showMode = (data) => {
   const initialValues = { mode: null, modeFreq: 0, numMap: {} };
