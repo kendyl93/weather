@@ -15,6 +15,7 @@ App uses `react-router` to route through two routes:
 
 1. `/` - Shows form to search through the OpenWeatherAPI. Use is allowed to type the city name and sends a request to the API. Results are saved to the `LocalStoreage`.
 2. `/forecast/:cityId` - Shows forecast (temperatures and humidity) width query set to `CNT=5`.
+   s
 
 # Tests
 
