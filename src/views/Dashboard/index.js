@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import City from './Components/City';
-import any from './utils/array';
-import { getCityData } from './api';
-import { cityAlreadyFetched } from './helpers';
+import styled from 'styled-components';
+import City from '../../Components/City';
+import any from '../../utils/array';
+import { getCityData } from '../../api';
+import { cityAlreadyFetched } from '../../helpers';
 import {
   showMin,
   showMax,
   showMean,
   showMode,
   kelvinToCelcius,
-} from './utils/math';
-import Hint from './UI/Hint';
-import CityForm from './Components/CityForm';
-import Header from './UI/Header';
-import Spinner from './UI/Spinner';
+} from '../../utils/math';
+import Hint from '../../UI/Hint';
+import CityForm from '../../Components/CityForm';
+import Header from '../../UI/Header';
+import Spinner from '../../UI/Spinner';
 
-import './App.scss';
+import './Dashboard.scss';
+
+const StatusBar = styled.div`
+  height: 50px;
+`;
 
 const getData = async (cityName) => {
   try {
@@ -61,7 +66,7 @@ const RenderCities = ({ cities }) =>
 
 const App = () => {
   const [data, setData] = useState(undefined);
-  const [cityName, setCityName] = useState('');
+  const [cityName, setCityName] = useState('london');
   const [cities, setCities] = useState([]);
   const [hint, setHint] = useState();
 
@@ -78,13 +83,18 @@ const App = () => {
 
       setData(cityData);
 
-      const maybeAlreadyFetched = cityAlreadyFetched(cities)(cityData);
+      if (any(cities)) {
+        const existingCitiesId = cities.map(({ city: { id } }) => id);
+        const maybeAlreadyFetched = cityAlreadyFetched(existingCitiesId)(
+          cityData,
+        );
 
-      if (maybeAlreadyFetched) {
-        return setHint({
-          message: `${cityName} data already fetched!`,
-          variant: 'warning',
-        });
+        if (maybeAlreadyFetched) {
+          return setHint({
+            message: `${cityName} data already fetched!`,
+            variant: 'warning',
+          });
+        }
       }
 
       return setCities([
@@ -109,19 +119,20 @@ const App = () => {
   }, []);
 
   return (
-    <Container className="row-spacing">
+    <Container className="dashboard-wrapper row-spacing">
       <Header Tag="h1">Weather tracker</Header>
       <CityForm
         onFormSubmit={onFormSubmit}
         handleCityName={handleCityName}
         cityName={cityName}
       />
-      {hint && <Hint hint={hint} />}
-      {data === null && <Spinner />}
-      <Row xs={2} md={5}>
+      <StatusBar>
+        {hint && <Hint hint={hint} />}
+        {data === null && <Spinner />}
+      </StatusBar>
+      <Row xs={1} md={2} lg={5}>
         <RenderCities cities={cities} />
       </Row>
-      {console.log({ cities })}
     </Container>
   );
 };

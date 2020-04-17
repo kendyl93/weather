@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Forecast from '../views/Forecast';
-import App from '../App';
+import Dashboard from '../views/Dashboard';
 
 const Routes = () => (
   <Switch>
     <Route exact path="/">
-      <App />
+      <Dashboard />
     </Route>
     <Route exact path="/forecast/:cityId">
       <Forecast />
