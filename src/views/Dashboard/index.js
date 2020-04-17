@@ -67,7 +67,7 @@ const RenderCities = ({ cities }) =>
 
 const App = () => {
   const [data, setData] = useState(undefined);
-  const [cityName, setCityName] = useState('london');
+  const [cityName, setCityName] = useState('');
   const [cities, setCities] = useState([]);
   const [hint, setHint] = useState();
 
