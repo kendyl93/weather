@@ -7,10 +7,31 @@ import Header from '../UI/Header';
 import { fromUnixTimestampToDate } from '../utils/date';
 
 const CityWrapper = styled.div`
-  border: solid 1px;
-  padding: 8px;
+  background-color: #eaeaea;
+  padding: 16px;
   border-radius: 16px;
+  margin-bottom: 32px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #e2e2e2;
+  }
 `;
+
+const RestInfo = styled.div`
+  color: black;
+`;
+
+const TemperaturesWrapper = styled.div`
+  margin-bottom: 32px;
+`;
+
+const formatWithCelcius = (data) => (
+  <span>
+    <span>{data}</span>
+    <span>&deg;C</span>
+  </span>
+);
 
 const City = ({
   cityId,
@@ -33,12 +54,18 @@ const City = ({
           <Header Tag="h4">
             {name} - {country}
           </Header>
-          <div>Sunrise: {sunriseDate.toLocaleTimeString()}</div>
-          <div>Sunset: {sunsetDate.toLocaleTimeString()}</div>
-          <div>min: {minTemperature}&deg;C</div>
-          <div>max: {maxTemperature}&deg;C</div>
-          <div>mean: {meanTemperature}&deg;C</div>
-          <div>mode: {modeTemperature}&deg;C</div>
+          <RestInfo>
+            <TemperaturesWrapper>
+              <div>min: {formatWithCelcius(minTemperature)}</div>
+              <div>max: {formatWithCelcius(maxTemperature)}</div>
+              <div>mean: {formatWithCelcius(meanTemperature)}</div>
+              <div>mode: {formatWithCelcius(modeTemperature)}</div>
+            </TemperaturesWrapper>
+            <div>
+              <div>Sunrise: {sunriseDate.toLocaleTimeString()}</div>
+              <div>Sunset: {sunsetDate.toLocaleTimeString()}</div>
+            </div>
+          </RestInfo>
         </Link>
       </CityWrapper>
     </Col>

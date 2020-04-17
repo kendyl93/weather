@@ -105,17 +105,24 @@ const App = () => {
       setHint({ message: 'Something went wrong', variant: 'danger' });
     }
 
+    setCityName('');
     return false;
   };
 
   useEffect(() => {
-    if (cities.length > 0) {
+    if (any(cities)) {
       localStorage.setItem('cities', JSON.stringify(cities));
     }
   }, [cities]);
 
   useEffect(() => {
-    setCities(JSON.parse(localStorage.getItem('cities') || '[]'));
+    const existingCities = JSON.parse(localStorage.getItem('cities') || '[]');
+
+    if (!existingCities) {
+      return;
+    }
+
+    setCities(existingCities);
   }, []);
 
   return (
@@ -130,7 +137,7 @@ const App = () => {
         {hint && <Hint hint={hint} />}
         {data === null && <Spinner />}
       </StatusBar>
-      <Row xs={1} md={2} lg={5}>
+      <Row xs={1} md={2} lg={3}>
         <RenderCities cities={cities} />
       </Row>
     </Container>
