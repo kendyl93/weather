@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import TemperatureChart from './TemperatureChart';
-import HumidityChart from './HumidityChart';
+import TemperatureChart from '../../Components/TemperatureChart';
+import HumidityChart from '../../Components/HumidityChart';
 
 const ChartsWrapper = styled.div`
   display: flex;

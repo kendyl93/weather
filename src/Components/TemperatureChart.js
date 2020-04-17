@@ -7,11 +7,11 @@ import {
   XAxis,
   YAxis,
 } from 'react-vis';
-import '../../../node_modules/react-vis/dist/style.css';
-import { getFormattedDateTime } from '../../utils/date';
-import any from '../../utils/array';
-import calculateYDomain from '../../utils/charts';
-import byY from './helpers';
+import '../../node_modules/react-vis/dist/style.css';
+import { getFormattedDateTime } from '../utils/date';
+import any from '../utils/array';
+import calculateYDomain from '../utils/charts';
+import byY from '../UI/Charts/helpers';
 
 const temperaturesData = (data) =>
   any(data) &&
