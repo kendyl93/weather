@@ -19,6 +19,7 @@ const Forecast = () => {
         const result = await get5DaysForecastByCityId(cityId);
         setCityData(result);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
       return false;

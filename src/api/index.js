@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 
 const API_KEY = 'dcc5b65560b4c5a817bd29988271028e';
